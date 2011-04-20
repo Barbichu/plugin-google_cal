@@ -32,7 +32,7 @@ class syntax_plugin_google_cal extends DokuWiki_Syntax_Plugin {
 	  @list($url, $alt) = explode('|',$match,2);
 	  $matches=array();
 	// '/^\s*([^\[|]+)(?:\[(?:([^,\]]*),)?([^,\]]*)\])?(?:\s*(?:\|\s*(.*))?)?$/mD'
-	  if (preg_match('/(.*)\[(.*)\]$/',trim($url),$matches)) {
+	  if (preg_match('/(.*)\[(.*)\]\{(.*)\}$/',trim($url),$matches)) {
 		$url = $matches[1];
 		if (strpos($matches[2],',') !== false) {
 		  @list($w, $h) = explode(',',$matches[2],2);
@@ -40,6 +40,8 @@ class syntax_plugin_google_cal extends DokuWiki_Syntax_Plugin {
                $h = $matches[2];
                $w = '98%';
           }
+	  $pvttk = $matches[3]; 
+	  if ($pvttk !== "") $pvttk = "&amp;pvttk=$pvttk" ;
         } else {
           $w = '98%';
 	  $h = '600';
@@ -60,9 +62,9 @@ class syntax_plugin_google_cal extends DokuWiki_Syntax_Plugin {
       list($style, $url, $alt, $w, $h) = $data;
       if($mode == 'xhtml'){
           // Two styles: wiki and error
-		  switch($style) {
+	switch($style) {
           case 'wiki':
-            $renderer->doc .= "<iframe src='http://www.google.com/calendar/embed?src=$url&amp;height=$h&amp;title=$alt'".
+            $renderer->doc .= "<iframe src='http://www.google.com/calendar/embed?src=$url&amp;height=$h&amp;title=$alt$pvttk'".
                 "title='$alt'  width='$w' height='$h' frameborder='0'></iframe>\n";
 	    break;
           case 'error':
