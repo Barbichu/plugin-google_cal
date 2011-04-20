@@ -32,7 +32,7 @@ class syntax_plugin_google_cal extends DokuWiki_Syntax_Plugin {
 	  @list($url, $alt) = explode('|',$match,2);
 	  $matches=array();
 	// '/^\s*([^\[|]+)(?:\[(?:([^,\]]*),)?([^,\]]*)\])?(?:\s*(?:\|\s*(.*))?)?$/mD'
-	  if (preg_match('/(.*)\[(.*)\]\{(.*)\}$/',trim($url),$matches)) {
+	  if (preg_match('/(.*)\[(.*)\]\[(.*)\]$/',trim($url),$matches)) {
 		$url = $matches[1];
 		if (strpos($matches[2],',') !== false) {
 		  @list($w, $h) = explode(',',$matches[2],2);
